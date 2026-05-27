@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CobrApp · Universidad de O'Higgins</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #060f18;
+    --navy2: #0d1b2a;
+    --navy3: #0a2030;
+    --border: #1e3a55;
+    --gold: #c9a84c;
+    --gold2: #e8c96a;
+    --gold3: #e8d5a0;
+    --blue: #60b4ff;
+    --red: #ff7070;
+    --green: #70e070;
+    --muted: #7a9bb5;
+    --text: #c8d8e8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+  /* Header */
+  header {
+    background: var(--navy2); border-bottom: 1px solid var(--border);
+    padding: 14px 24px; display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-icon {
+    width: 38px; height: 38px; border-radius: 9px;
+    background: linear-gradient(135deg, #c9a84c, #e8c96a);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-weight: 900; font-size: 20px; color: #0d1b2a;
+  }
+  .logo-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 17px; color: var(--gold2); letter-spacing: 1px; }
+  .logo-sub { font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+  .header-right { font-size: 11px; color: #4a7a9b; text-align: right; line-height: 1.6; }
+
+  /* Layout */
+  .main { max-width: 780px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* Page title */
+  .page-title { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--gold3); font-weight: 700; }
+  .page-sub { font-size: 12px; color: #4a7a9b; margin-top: 6px; }
+
+  /* Stats grid */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0 12px; }
+  .stat-card {
+    background: var(--navy2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; margin-top: 6px; }
+  .stat-sub { font-size: 11px; color: #4a7a9b; margin-top: 4px; }
+
+  /* Cartera total */
+  .cartera {
+    background: linear-gradient(135deg, #0d1b2a, #0a2a1a);
+    border: 1px solid #2a4a1a; border-radius: 12px; padding: 20px 24px;
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;
+  }
+  .cartera-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+  .cartera-value { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--gold2); font-weight: 700; margin-top: 4px; }
+  .cartera-sub { font-size: 11px; color: #4a7a9b; margin-top: 4px; }
+
+  /* Caso card */
+  .casos-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+  }
+  .casos-title { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--gold); font-weight: 700; }
+  .casos-box { background: var(--navy2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+
+  .caso-row {
+    padding: 18px 20px; cursor: pointer; transition: background 0.15s;
+    border-bottom: 1px solid var(--border);
+  }
+  .caso-row:last-child { border-bottom: none; }
+  .caso-row:hover { background: var(--navy3); }
+  .caso-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .caso-nombre { font-weight: 700; color: var(--gold3); font-size: 15px; }
+  .caso-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .caso-etapa { font-size: 11px; color: #4a7a9b; margin-top: 4px; }
+  .caso-monto { text-align: right; }
+  .caso-monto-valor { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--gold2); }
+  .caso-mora { font-size: 10px; color: #ff9060; margin-top: 2px; }
+  .caso-ver { font-size: 10px; color: #4a7a9b; margin-top: 4px; }
+
+  /* Badge */
+  .badge {
+    font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+    letter-spacing: 1px; text-transform: uppercase; display: inline-block;
+  }
+  .badge-prejudicial { background: #1a3a5c; color: #60b4ff; }
+  .badge-judicial { background: #3a1a1a; color: #ff7070; }
+  .badge-pagado { background: #1a3a1a; color: #70e070; }
+
+  /* Etapa bar */
+  .etapa-bar { display: flex; gap: 4px; margin-top: 16px; }
+  .etapa-seg { flex: 1; height: 5px; border-radius: 3px; }
+  .etapa-active { background: var(--gold); }
+  .etapa-inactive { background: var(--border); }
+  .etapa-label { font-size: 11px; color: var(--gold); margin-top: 6px; font-weight: 600; }
+
+  /* Detalle */
+  .detalle { display: none; }
+  .detalle.visible { display: block; }
+  .lista.hidden { display: none; }
+
+  .back-btn {
+    background: transparent; border: none; color: var(--muted); cursor: pointer;
+    font-size: 13px; margin-bottom: 20px; padding: 0; display: flex; align-items: center; gap: 6px;
+    font-family: 'Inter', sans-serif;
+  }
+  .back-btn:hover { color: var(--text); }
+
+  .hero-card {
+    background: linear-gradient(135deg, var(--navy2), #0a2a3a);
+    border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 16px;
+  }
+  .hero-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; }
+  .hero-nombre { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--gold3); font-weight: 700; margin-top: 6px; }
+  .hero-sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  .montos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+
+  .info-card {
+    background: var(--navy2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .info-card-title {
+    font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .info-item-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .info-item-value { font-size: 13px; color: var(--text); margin-top: 3px; }
+
+  /* Gestión form */
+  .gestion-box {
+    background: var(--navy2); border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+  }
+  .gestion-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .gestion-title { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--gold); font-weight: 700; }
+  .btn-gold {
+    background: var(--gold); border: none; color: #0d1b2a;
+    padding: 8px 18px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 700;
+    font-family: 'Inter', sans-serif; transition: opacity 0.15s;
+  }
+  .btn-gold:hover { opacity: 0.85; }
+
+  .compliance-ok { background: #1a3a1a; color: #70e070; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+  .compliance-warn { background: #3a1a1a; color: #ff7070; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 6px; }
+  .form-control {
+    width: 100%; background: #0a1520; border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 9px 12px; font-size: 13px;
+    font-family: 'Inter', sans-serif;
+  }
+  textarea.form-control { resize: none; }
+  .form-row { display: flex; gap: 10px; }
+  .btn-cancel {
+    flex: 1; padding: 10px; background: transparent; border: 1px solid var(--border);
+    color: var(--muted); border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif;
+  }
+  .btn-save {
+    flex: 2; padding: 10px; background: var(--gold); border: none;
+    color: #0d1b2a; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; font-family: 'Inter', sans-serif;
+  }
+
+  .gestion-item {
+    background: #0a1520; border-radius: 8px; padding: 12px 14px;
+    border-left: 3px solid var(--gold); margin-bottom: 8px;
+  }
+  .gestion-item-top { display: flex; justify-content: space-between; align-items: center; }
+  .gestion-tipo { font-size: 11px; color: var(--gold2); font-weight: 700; text-transform: uppercase; }
+  .gestion-fecha { font-size: 10px; color: #4a7a9b; }
+  .gestion-resultado { font-size: 12px; color: #90b0c8; margin-top: 4px; }
+  .gestion-desc { font-size: 12px; color: var(--text); margin-top: 6px; }
+  .no-gestiones { text-align: center; color: #4a7a9b; font-size: 13px; padding: 24px 0; }
+
+  .form-hidden { display: none; }
+  .footer { text-align: center; margin-top: 32px; font-size: 10px; color: #2a4a6a; }
+
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .montos-grid { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+    .cartera { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">C</div>
+    <div>
+      <div class="logo-name">CobrApp</div>
+      <div class="logo-sub">Universidad de O'Higgins</div>
+    </div>
+  </div>
+  <div class="header-right">
+    Eduardo Durán Polanco · Abogado<br>
+    Matías Gelsis · Procurador
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- ═══ LISTA DE CASOS ═══ -->
+  <div class="lista" id="vista-lista">
+    <div class="page-title">Dashboard de Cobranza</div>
+    <div class="page-sub" id="fecha-hoy"></div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Total casos</div>
+        <div class="stat-value" style="color:var(--gold2)">1</div>
+        <div class="stat-sub">activos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Prejudicial</div>
+        <div class="stat-value" style="color:var(--blue)">1</div>
+        <div class="stat-sub">en gestión</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Judicial</div>
+        <div class="stat-value" style="color:var(--red)">0</div>
+        <div class="stat-sub">en tribunal</div>
+      </div>
+    </div>
+
+    <div class="cartera">
+      <div>
+        <div class="cartera-label">Cartera total adeudada</div>
+        <div class="cartera-value" id="cartera-total"></div>
+        <div class="cartera-sub">Capital + intereses actualizados al día de hoy</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:var(--muted)">Mora acumulada</div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:#ff9060;font-weight:700" id="mora-total"></div>
+        <div style="font-size:10px;color:#4a7a9b" id="meses-mora"></div>
+      </div>
+    </div>
+
+    <div class="casos-box">
+      <div class="casos-header">
+        <div class="casos-title">Casos Activos</div>
+        <span class="badge badge-prejudicial">1 caso</span>
+      </div>
+      <div class="caso-row" onclick="verDetalle()">
+        <div class="caso-top">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <span class="caso-nombre">José Andrés Ayala Gatica</span>
+              <span class="badge badge-prejudicial">Prejudicial</span>
+            </div>
+            <div class="caso-meta">RUT 15.116.360-2 · Pagaré N° 3188 · Ingeniería Comercial</div>
+            <div class="caso-etapa">Etapa 1: Recepción y Análisis</div>
+          </div>
+          <div class="caso-monto">
+            <div class="caso-monto-valor" id="monto-lista"></div>
+            <div class="caso-mora" id="mora-lista"></div>
+            <div class="caso-ver">→ Ver detalle</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">CobrApp v1.0 · Durán &amp; Gelsis Abogados · Rancagua</div>
+  </div>
+
+  <!-- ═══ DETALLE CASO ═══ -->
+  <div class="detalle" id="vista-detalle">
+    <button class="back-btn" onclick="volverLista()">← Volver a casos</button>
+
+    <!-- Hero -->
+    <div class="hero-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+        <div>
+          <div class="hero-label">Deudor</div>
+          <div class="hero-nombre">José Andrés Ayala Gatica</div>
+          <div class="hero-sub">RUT 15.116.360-2 · Pagaré N° 3188</div>
+        </div>
+        <span class="badge badge-prejudicial">Prejudicial</span>
+      </div>
+      <div class="etapa-bar">
+        <div class="etapa-seg etapa-active"></div>
+        <div class="etapa-seg etapa-inactive"></div>
+        <div class="etapa-seg etapa-inactive"></div>
+        <div class="etapa-seg etapa-inactive"></div>
+        <div class="etapa-seg etapa-inactive"></div>
+        <div class="etapa-seg etapa-inactive"></div>
+      </div>
+      <div class="etapa-label">Etapa 1 de 6: Recepción y Análisis</div>
+    </div>
+
+    <!-- Montos -->
+    <div class="montos-grid">
+      <div class="stat-card">
+        <div class="stat-label">Capital</div>
+        <div class="stat-value" style="color:var(--text);font-size:20px">$2.209.320</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Mora acumulada</div>
+        <div class="stat-value" style="color:#ff9060;font-size:20px" id="mora-detalle"></div>
+        <div class="stat-sub" id="meses-detalle"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total adeudado</div>
+        <div class="stat-value" style="color:var(--gold2);font-size:20px" id="total-detalle"></div>
+      </div>
+    </div>
+
+    <!-- Datos del pagaré -->
+    <div class="info-card">
+      <div class="info-card-title" style="color:var(--gold)">📄 Datos del Pagaré</div>
+      <div class="info-grid">
+        <div><div class="info-item-label">Carrera</div><div class="info-item-value">Ingeniería Comercial</div></div>
+        <div><div class="info-item-label">N° Matrícula</div><div class="info-item-value">20200104610349</div></div>
+        <div><div class="info-item-label">Fecha emisión</div><div class="info-item-value">05/03/2021</div></div>
+        <div><div class="info-item-label">Fecha vencimiento</div><div class="info-item-value">31/03/2023</div></div>
+        <div><div class="info-item-label">Notario</div><div class="info-item-value">Ernesto Montoya Peredo</div></div>
+        <div><div class="info-item-label">Tribunal</div><div class="info-item-value">1° Juzgado Civil de Rancagua</div></div>
+        <div><div class="info-item-label">Tasa interés mora</div><div class="info-item-value">1% mensual</div></div>
+        <div><div class="info-item-label">Responsable</div><div class="info-item-value">Matías Gelsis</div></div>
+      </div>
+    </div>
+
+    <!-- Avalista -->
+    <div class="info-card" style="border-color:#2a3a1a">
+      <div class="info-card-title" style="color:#90c870">👤 Avalista / Codeudor Solidario</div>
+      <div class="info-grid">
+        <div><div class="info-item-label">Nombre</div><div class="info-item-value">Víctor Hugo Ayala Acosta</div></div>
+        <div><div class="info-item-label">RUT</div><div class="info-item-value">9.165.326-5</div></div>
+        <div><div class="info-item-label">Teléfono</div><div class="info-item-value">9-82283342</div></div>
+        <div><div class="info-item-label">Dirección</div><div class="info-item-value">Ruta La Travesía 04000, Rancagua</div></div>
+      </div>
+    </div>
+
+    <!-- Observaciones -->
+    <div class="info-card" style="margin-bottom:16px">
+      <div class="info-card-title" style="color:var(--muted)">📝 Observaciones</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.6">
+        Pagaré de arancel 2021. Vencido 31/03/2023. Con avalista solidario. Notariado ante Ernesto Montoya Peredo, Rancagua.
+      </div>
+    </div>
+
+    <!-- Gestiones -->
+    <div class="gestion-box">
+      <div class="gestion-header">
+        <div>
+          <div class="gestion-title">Gestiones</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span id="compliance-badge"></span>
+          <button class="btn-gold" onclick="toggleForm()">+ Nueva Gestión</button>
+        </div>
+      </div>
+
+      <!-- Formulario nueva gestión -->
+      <div id="form-gestion" class="form-hidden">
+        <div style="background:#0a1520;border-radius:10px;padding:16px;margin-bottom:16px;border:1px solid var(--border)">
+          <div class="form-group">
+            <label class="form-label">Tipo de gestión</label>
+            <select class="form-control" id="tipo-gestion">
+              <option value="llamada">Llamada</option>
+              <option value="email">Email</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="carta_simple">Carta simple</option>
+              <option value="carta_certificada">Carta certificada</option>
+              <option value="visita">Visita</option>
+              <option value="notificacion">Notificación</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Resultado</label>
+            <select class="form-control" id="resultado-gestion">
+              <option value="contactado">Contactado</option>
+              <option value="no_contesta">No contesta</option>
+              <option value="buzon">Buzón</option>
+              <option value="promesa_pago">Promesa de pago</option>
+              <option value="acuerdo_pago">Acuerdo de pago</option>
+              <option value="rechazo">Rechazo</option>
+              <option value="sin_respuesta">Sin respuesta</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" id="desc-gestion" rows="3" placeholder="Detalle de la gestión..."></textarea>
+          </div>
+          <div class="form-row">
+            <button class="btn-cancel" onclick="toggleForm()">Cancelar</button>
+            <button class="btn-save" onclick="guardarGestion()">Guardar Gestión</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista gestiones -->
+      <div id="lista-gestiones">
+        <div class="no-gestiones">Sin gestiones registradas aún.<br><span style="font-size:11px">Agrega la primera gestión con el botón de arriba.</span></div>
+      </div>
+    </div>
+
+    <div class="footer">CobrApp v1.0 · Durán &amp; Gelsis Abogados · Rancagua</div>
+  </div>
+
+</div>
+
+<script>
+  // ── Datos base ──
+  const CAPITAL = 2209320;
+  const VENCIMIENTO = new Date('2023-03-31');
+  const TASA = 0.01;
+
+  function calcMora() {
+    const hoy = new Date();
+    const meses = Math.max(0, Math.floor((hoy - VENCIMIENTO) / (1000*60*60*24*30)));
+    const total = Math.round(CAPITAL * Math.pow(1 + TASA, meses));
+    const mora = total - CAPITAL;
+    return { total, mora, meses };
+  }
+
+  function clp(n) {
+    return '$' + n.toLocaleString('es-CL');
+  }
+
+  function fechaHoy() {
+    return new Date().toLocaleDateString('es-CL', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  }
+
+  // ── Render inicial ──
+  const m = calcMora();
+  document.getElementById('fecha-hoy').textContent = fechaHoy();
+  document.getElementById('cartera-total').textContent = clp(m.total);
+  document.getElementById('mora-total').textContent = clp(m.mora);
+  document.getElementById('meses-mora').textContent = m.meses + ' meses de mora';
+  document.getElementById('monto-lista').textContent = clp(m.total);
+  document.getElementById('mora-lista').textContent = '+' + m.meses + ' meses mora';
+  document.getElementById('mora
