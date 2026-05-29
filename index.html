@@ -1,4 +1,62 @@
-,#0a2a3a);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CobrApp · Universidad de O'Higgins</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#060f18;--navy2:#0d1b2a;--navy3:#0a2030;--border:#1e3a55;--gold:#c9a84c;--gold2:#e8c96a;--gold3:#e8d5a0;--blue:#60b4ff;--red:#ff7070;--green:#70e070;--muted:#7a9bb5;--text:#c8d8e8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+header{background:var(--navy2);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,#c9a84c,#e8c96a);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:20px;color:#0d1b2a}
+.logo-name{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;color:var(--gold2);letter-spacing:1px}
+.logo-sub{font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.header-right{font-size:11px;color:#4a7a9b;text-align:right;line-height:1.6}
+.main{max-width:780px;margin:0 auto;padding:28px 20px 60px}
+.page-title{font-family:'Playfair Display',serif;font-size:28px;color:var(--gold3);font-weight:700}
+.page-sub{font-size:12px;color:#4a7a9b;margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 12px}
+.stat-card{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px}
+.stat-value{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-top:6px}
+.stat-sub{font-size:11px;color:#4a7a9b;margin-top:4px}
+.cartera{background:linear-gradient(135deg,#0d1b2a,#0a2a1a);border:1px solid #2a4a1a;border-radius:12px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.cartera-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px}
+.cartera-value{font-family:'Playfair Display',serif;font-size:32px;color:var(--gold2);font-weight:700;margin-top:4px}
+.cartera-sub{font-size:11px;color:#4a7a9b;margin-top:4px}
+.casos-box{background:var(--navy2);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.casos-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+.casos-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);font-weight:700}
+.badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;display:inline-block}
+.badge-prejudicial{background:#1a3a5c;color:#60b4ff}
+.badge-judicial{background:#3a1a1a;color:#ff7070}
+.badge-pagado{background:#1a3a1a;color:#70e070}
+.badge-cerrado{background:#2a2a2a;color:#aaa}
+.caso-row{padding:18px 20px;cursor:pointer;transition:background 0.15s;border-bottom:1px solid var(--border)}
+.caso-row:last-child{border-bottom:none}
+.caso-row:hover{background:var(--navy3)}
+.caso-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.caso-nombre{font-weight:700;color:var(--gold3);font-size:15px}
+.caso-meta{font-size:12px;color:var(--muted);margin-top:4px}
+.caso-etapa{font-size:11px;color:#4a7a9b;margin-top:4px}
+.caso-monto{text-align:right;min-width:120px}
+.caso-monto-valor{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold2)}
+.caso-mora{font-size:10px;color:#ff9060;margin-top:2px}
+.caso-ver{font-size:10px;color:#4a7a9b;margin-top:4px}
+.etapa-bar{display:flex;gap:4px;margin-top:16px}
+.etapa-seg{flex:1;height:5px;border-radius:3px}
+.etapa-active{background:var(--gold)}
+.etapa-inactive{background:var(--border)}
+.etapa-label{font-size:11px;color:var(--gold);margin-top:6px;font-weight:600}
+.detalle{display:none}
+.detalle.visible{display:block}
+.lista.hidden{display:none}
+.back-btn{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;margin-bottom:20px;padding:0;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif}
+.back-btn:hover{color:var(--text)}
+.hero-card{background:linear-gradient(135deg,var(--navy2),#0a2a3a);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px}
 .hero-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px}
 .hero-nombre{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold3);font-weight:700;margin-top:6px}
 .hero-sub{font-size:13px;color:var(--muted);margin-top:6px}
@@ -31,10 +89,12 @@ textarea.form-control{resize:none}
 .form-hidden{display:none}
 .footer{text-align:center;margin-top:32px;font-size:10px;color:#2a4a6a}
 .loading{text-align:center;padding:40px;color:#4a7a9b}
+.empty{text-align:center;padding:40px;color:#4a7a9b}
 @media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.montos-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
 <header>
   <div class="logo">
     <div class="logo-icon">C</div>
@@ -45,7 +105,9 @@ textarea.form-control{resize:none}
   </div>
   <div class="header-right">Eduardo Durán Polanco · Abogado<br>Matías Gelsis · Procurador</div>
 </header>
+
 <div class="main">
+  <!-- LISTA -->
   <div class="lista" id="vista-lista">
     <div class="page-title">Dashboard de Cobranza</div>
     <div class="page-sub" id="fecha-hoy"></div>
@@ -74,17 +136,23 @@ textarea.form-control{resize:none}
     </div>
     <div class="footer">CobrApp v1.0 · Durán &amp; Gelsis Abogados · Rancagua</div>
   </div>
+
+  <!-- DETALLE -->
   <div class="detalle" id="vista-detalle">
     <button class="back-btn" onclick="volverLista()">← Volver a casos</button>
     <div id="contenido-detalle"></div>
     <div class="footer">CobrApp v1.0 · Durán &amp; Gelsis Abogados · Rancagua</div>
   </div>
 </div>
+
 <script>
-const SB_URL='https://mdxgwjjxufkkgcjrkfeu.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1keGd3amp4dWZra2djanJrZmV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MjQ3MTksImV4cCI6MjA5NDMwMDcxOX0.-Asw0hK89pMjk9-EYLw_iNJA8yNKXOumlvSG5kHr6pY';
-const ETAPAS=['Recepción y Análisis','Cobranza Extrajudicial','Evaluación y Judicialización','Tramitación Procesal','Recuperación y Cierre','Cerrado'];
-let casos=[],casoActivo=null,gestiones=[];
+const SB_URL = 'https://mdxgwjjxufkkgcjrkfeu.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1keGd3amp4dWZra2djanJrZmV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3MjQ3MTksImV4cCI6MjA5NDMwMDcxOX0.-Asw0hK89pMjk9-EYLw_iNJA8yNKXOumlvSG5kHr6pY';
+const ETAPAS = ['Recepción y Análisis','Cobranza Extrajudicial','Evaluación y Judicialización','Tramitación Procesal','Recuperación y Cierre','Cerrado'];
+let casos = [];
+let casoActivo = null;
+let gestiones = [];
+
 function clp(n){if(!n)return '—';return '$'+Number(n).toLocaleString('es-CL')}
 function fecha(d){if(!d)return '—';return new Date(d).toLocaleDateString('es-CL')}
 function mora(c){
@@ -100,6 +168,7 @@ function badge(fase){
   const l={prejudicial:'Prejudicial',judicial:'Judicial',pagado:'Pagado',cerrado:'Cerrado'};
   return `<span class="badge ${m[fase]||'badge-cerrado'}">${l[fase]||fase}</span>`;
 }
+
 async function sbGet(path){
   const r=await fetch(SB_URL+path,{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});
   return r.json();
@@ -107,23 +176,32 @@ async function sbGet(path){
 async function sbPost(path,body){
   return fetch(SB_URL+path,{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(body)});
 }
+
 async function cargarCasos(){
   document.getElementById('lista-casos').innerHTML='<div class="loading">Cargando casos...</div>';
   casos=await sbGet('/rest/v1/casos?order=creado_en.desc');
-  if(!Array.isArray(casos)){casos=[];document.getElementById('lista-casos').innerHTML='<div class="loading">Error al cargar</div>';return;}
+  if(!Array.isArray(casos)){casos=[];document.getElementById('lista-casos').innerHTML='<div class="empty">Error al cargar casos</div>';return;}
+  
+  const total=casos.length;
   const prej=casos.filter(c=>c.fase==='prejudicial').length;
   const jud=casos.filter(c=>c.fase==='judicial').length;
   let totalDeuda=0,totalMora=0;
   casos.forEach(c=>{const m=mora(c);totalDeuda+=m.total;totalMora+=m.mora;});
-  document.getElementById('stat-total').textContent=casos.length;
+  
+  document.getElementById('stat-total').textContent=total;
   document.getElementById('stat-prej').textContent=prej;
   document.getElementById('stat-jud').textContent=jud;
   document.getElementById('cartera-total').textContent=clp(totalDeuda);
   document.getElementById('mora-total').textContent=clp(totalMora);
-  if(casos.length===0){document.getElementById('lista-casos').innerHTML='<div class="loading">Sin casos registrados</div>';return;}
+  
+  if(casos.length===0){
+    document.getElementById('lista-casos').innerHTML='<div class="empty">📋 Sin casos registrados<br><span style="font-size:12px">Ingresa casos via el formulario Tally</span></div>';
+    return;
+  }
+  
   document.getElementById('lista-casos').innerHTML=casos.map((c,i)=>{
     const m=mora(c);
-    return `<div class="caso-row" onclick="verDetalle(${i})">
+    return `<div class="caso-row" onclick="verDetalle(${i})" style="${i===casos.length-1?'border-bottom:none':''}">
       <div class="caso-top">
         <div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
@@ -141,6 +219,7 @@ async function cargarCasos(){
     </div>`;
   }).join('');
 }
+
 async function verDetalle(idx){
   casoActivo=casos[idx];
   gestiones=await sbGet('/rest/v1/gestiones?caso_id=eq.'+casoActivo.id+'&order=creado_en.desc');
@@ -150,26 +229,41 @@ async function verDetalle(idx){
   document.getElementById('vista-detalle').classList.add('visible');
   window.scrollTo(0,0);
 }
+
 function renderDetalle(){
-  const c=casoActivo,m=mora(c);
+  const c=casoActivo;
+  const m=mora(c);
   const etapaIdx=ETAPAS.indexOf(c.etapa_nombre);
   const segs=ETAPAS.map((_,i)=>`<div class="etapa-seg ${i<=etapaIdx?'etapa-active':'etapa-inactive'}"></div>`).join('');
   const hora=new Date().getHours(),dia=new Date().getDay();
   const compliant=hora>=8&&hora<20&&dia!==0;
-  const gList=gestiones.length===0?'<div class="no-gestiones">Sin gestiones registradas.</div>':gestiones.map(g=>`<div class="gestion-item"><div class="gestion-item-top"><span class="gestion-tipo">${(g.tipo||'').replace(/_/g,' ')}</span><span class="gestion-fecha">${new Date(g.creado_en).toLocaleString('es-CL')}</span></div><div class="gestion-resultado">${(g.resultado||'').replace(/_/g,' ')}</div>${g.descripcion?`<div class="gestion-desc">${g.descripcion}</div>`:''}</div>`).join('');
+  const gList=gestiones.length===0
+    ?'<div class="no-gestiones">Sin gestiones registradas.<br><span style="font-size:11px">Agrega la primera con el botón de arriba.</span></div>'
+    :gestiones.map(g=>`<div class="gestion-item" style="border-left-color:${g.compliance_ok?'var(--gold)':'var(--red)'}">
+      <div class="gestion-item-top"><span class="gestion-tipo">${(g.tipo||'').replace(/_/g,' ')}</span><span class="gestion-fecha">${new Date(g.creado_en).toLocaleString('es-CL')}</span></div>
+      <div class="gestion-resultado">${(g.resultado||'').replace(/_/g,' ')}</div>
+      ${g.descripcion?`<div class="gestion-desc">${g.descripcion}</div>`:''}
+    </div>`).join('');
+
   document.getElementById('contenido-detalle').innerHTML=`
     <div class="hero-card">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
-        <div><div class="hero-label">Deudor</div><div class="hero-nombre">${c.nombre||'Sin nombre'}</div><div class="hero-sub">RUT ${c.rut}${c.nro_pagare?' · Pagaré N° '+c.nro_pagare:''}</div></div>${badge(c.fase)}
+        <div>
+          <div class="hero-label">Deudor</div>
+          <div class="hero-nombre">${c.nombre||'Sin nombre'}</div>
+          <div class="hero-sub">RUT ${c.rut}${c.nro_pagare?' · Pagaré N° '+c.nro_pagare:''}</div>
+        </div>${badge(c.fase)}
       </div>
       <div class="etapa-bar">${segs}</div>
       <div class="etapa-label">Etapa ${etapaIdx+1} de 6: ${c.etapa_nombre}</div>
     </div>
+
     <div class="montos-grid">
       <div class="stat-card"><div class="stat-label">Capital</div><div class="stat-value" style="color:var(--text);font-size:20px">${clp(c.monto_original)}</div></div>
       <div class="stat-card"><div class="stat-label">Mora acumulada</div><div class="stat-value" style="color:#ff9060;font-size:20px">${clp(m.mora)}</div><div class="stat-sub">${m.meses} meses</div></div>
       <div class="stat-card"><div class="stat-label">Total adeudado</div><div class="stat-value" style="color:var(--gold2);font-size:20px">${clp(m.total)}</div></div>
     </div>
+
     <div class="info-card">
       <div class="info-card-title" style="color:var(--gold)">📄 Datos del Pagaré</div>
       <div class="info-grid">
@@ -181,8 +275,19 @@ function renderDetalle(){
         <div><div class="info-item-label">Tribunal</div><div class="info-item-value">${c.tribunal||'—'}</div></div>
       </div>
     </div>
-    ${c.avalista_nombre?`<div class="info-card" style="border-color:#2a3a1a"><div class="info-card-title" style="color:#90c870">👤 Avalista / Codeudor Solidario</div><div class="info-grid"><div><div class="info-item-label">Nombre</div><div class="info-item-value">${c.avalista_nombre}</div></div><div><div class="info-item-label">RUT</div><div class="info-item-value">${c.avalista_rut||'—'}</div></div><div><div class="info-item-label">Teléfono</div><div class="info-item-value">${c.avalista_telefono||'—'}</div></div><div><div class="info-item-label">Dirección</div><div class="info-item-value">${c.avalista_direccion||'—'}</div></div></div></div>`:''}
+
+    ${c.avalista_nombre?`<div class="info-card" style="border-color:#2a3a1a">
+      <div class="info-card-title" style="color:#90c870">👤 Avalista / Codeudor Solidario</div>
+      <div class="info-grid">
+        <div><div class="info-item-label">Nombre</div><div class="info-item-value">${c.avalista_nombre}</div></div>
+        <div><div class="info-item-label">RUT</div><div class="info-item-value">${c.avalista_rut||'—'}</div></div>
+        <div><div class="info-item-label">Teléfono</div><div class="info-item-value">${c.avalista_telefono||'—'}</div></div>
+        <div><div class="info-item-label">Dirección</div><div class="info-item-value">${c.avalista_direccion||'—'}</div></div>
+      </div>
+    </div>`:''}
+
     ${c.observaciones?`<div class="info-card"><div class="info-card-title" style="color:var(--muted)">📝 Observaciones</div><div style="font-size:13px;color:var(--text);line-height:1.6">${c.observaciones}</div></div>`:''}
+
     <div class="gestion-box">
       <div class="gestion-header">
         <div class="gestion-title">Gestiones (${gestiones.length})</div>
@@ -194,9 +299,18 @@ function renderDetalle(){
       <div id="form-gestion" class="form-hidden">
         <div style="background:#0a1520;border-radius:10px;padding:16px;margin-bottom:16px;border:1px solid var(--border)">
           <div class="form-group"><label class="form-label">Tipo</label>
-            <select class="form-control" id="tipo-g"><option value="llamada">Llamada</option><option value="email">Email</option><option value="whatsapp">WhatsApp</option><option value="carta_simple">Carta simple</option><option value="carta_certificada">Carta certificada</option><option value="visita">Visita</option><option value="notificacion">Notificación</option></select></div>
+            <select class="form-control" id="tipo-g">
+              <option value="llamada">Llamada</option><option value="email">Email</option>
+              <option value="whatsapp">WhatsApp</option><option value="carta_simple">Carta simple</option>
+              <option value="carta_certificada">Carta certificada</option><option value="visita">Visita</option>
+              <option value="notificacion">Notificación</option>
+            </select></div>
           <div class="form-group"><label class="form-label">Resultado</label>
-            <select class="form-control" id="resultado-g"><option value="contactado">Contactado</option><option value="no_contesta">No contesta</option><option value="promesa_pago">Promesa de pago</option><option value="acuerdo_pago">Acuerdo de pago</option><option value="rechazo">Rechazo</option><option value="sin_respuesta">Sin respuesta</option></select></div>
+            <select class="form-control" id="resultado-g">
+              <option value="contactado">Contactado</option><option value="no_contesta">No contesta</option>
+              <option value="promesa_pago">Promesa de pago</option><option value="acuerdo_pago">Acuerdo de pago</option>
+              <option value="rechazo">Rechazo</option><option value="sin_respuesta">Sin respuesta</option>
+            </select></div>
           <div class="form-group"><label class="form-label">Descripción</label>
             <textarea class="form-control" id="desc-g" rows="3" placeholder="Detalle de la gestión..."></textarea></div>
           <div class="form-row">
@@ -208,24 +322,37 @@ function renderDetalle(){
       <div id="lista-g">${gList}</div>
     </div>`;
 }
+
 function toggleForm(){document.getElementById('form-gestion').classList.toggle('form-hidden')}
+
 async function guardarGestion(){
   const desc=document.getElementById('desc-g').value.trim();
   if(!desc)return;
   const hora=new Date().getHours(),dia=new Date().getDay();
   const compliant=hora>=8&&hora<20&&dia!==0;
-  await sbPost('/rest/v1/gestiones',{caso_id:casoActivo.id,tipo:document.getElementById('tipo-g').value,resultado:document.getElementById('resultado-g').value,descripcion:desc,hora_gestion:new Date().toTimeString().slice(0,5),compliance_ok:compliant,realizada_por:'Matías Gelsis'});
+  await sbPost('/rest/v1/gestiones',{
+    caso_id:casoActivo.id,
+    tipo:document.getElementById('tipo-g').value,
+    resultado:document.getElementById('resultado-g').value,
+    descripcion:desc,
+    hora_gestion:new Date().toTimeString().slice(0,5),
+    compliance_ok:compliant,
+    realizada_por:'Matías Gelsis'
+  });
   document.getElementById('desc-g').value='';
   gestiones=await sbGet('/rest/v1/gestiones?caso_id=eq.'+casoActivo.id+'&order=creado_en.desc');
   if(!Array.isArray(gestiones))gestiones=[];
   renderDetalle();
   toggleForm();
 }
+
 function volverLista(){
   document.getElementById('vista-detalle').classList.remove('visible');
   document.getElementById('vista-lista').classList.remove('hidden');
-  cargarCasos();window.scrollTo(0,0);
+  cargarCasos();
+  window.scrollTo(0,0);
 }
+
 document.getElementById('fecha-hoy').textContent=new Date().toLocaleDateString('es-CL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 cargarCasos();
 </script>
