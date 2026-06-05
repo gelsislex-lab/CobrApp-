@@ -496,7 +496,7 @@ async function guardarCasoOCR(){
     responsable:'Matías Gelsis',
     ultima_carta:0,
     tribunal:'1° Juzgado Civil de Rancagua',
-    observaciones:'Caso ingresado via OCR. Carta N°1 pendiente de envío automático.'
+    observaciones:'Caso ingresado via OCR'
   };
   setStatus('💾 Guardando caso...','processing');
   try{
@@ -510,13 +510,32 @@ async function guardarCasoOCR(){
       },
       body:JSON.stringify(caso)
     });
-    if(r.ok){
-      setStatus('🎉 Caso guardado. Carta N°1 se enviará automáticamente en el próximo ciclo.','success');
-      setTimeout(()=>{cerrarModal();cargarCasos();},2500);
-    }else{
+    if(!r.ok){
       const errText=await r.text();
       throw new Error('Supabase: '+errText);
     }
+    const created=await r.json();
+    const newCase=Array.isArray(created)?created[0]:created;
+    setStatus('📧 Enviando Carta N°1...','processing');
+    try{
+      await fetch('https://hook.us2.make.com/9jm44att97quqpuxyh7suzwva6zkhm03',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          id:newCase.id,
+          nombre:newCase.nombre,
+          rut:newCase.rut,
+          correo:newCase.correo,
+          nro_pagare:newCase.nro_pagare,
+          monto_original:newCase.monto_original,
+          carrera:newCase.carrera
+        })
+      });
+      setStatus('🎉 Caso guardado y Carta N°1 enviada!','success');
+    }catch(e){
+      setStatus('⚠️ Caso guardado pero email pudo fallar. Revisa Gmail.','success');
+    }
+    setTimeout(()=>{cerrarModal();cargarCasos();},3000);
   }catch(err){setStatus('❌ Error: '+err.message,'error');}
 }
 
