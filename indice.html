@@ -473,32 +473,37 @@ async function procesarOCR(){
 
 async function guardarCasoOCR(){
   const g=id=>document.getElementById(id).value.trim();
+  const ts=new Date().toISOString();
+  const id='ocr-'+Date.now();
   const payload={
-    eventId:'ocr-'+Date.now(),
+    eventId:id,
     eventType:'FORM_RESPONSE',
-    createdAt:new Date().toISOString(),
-    formId:'Ekv9Rl',
-    formName:'Ingreso Casos (OCR)',
-    fields:{
-      nombre_completo:g('ocr-nombre')||'',
-      numero_de_pagare:g('ocr-pagare')||'',
-      fecha_de_emision:g('ocr-emision')||'',
-      fecha_de_vencimiento:g('ocr-vencimiento')||'',
-      monto_original:g('ocr-monto')?Number(g('ocr-monto')):0,
-      carrera_alumno:g('ocr-carrera')||'',
-      numero_de_matricula:g('ocr-matricula')||'',
-      notaria:g('ocr-notario')||'',
-      nombre_avalista:g('ocr-av-nombre')||'',
-      rut_avalista:g('ocr-av-rut')||'',
-      telefono_avalista:g('ocr-av-tel')||'',
-      direccion_avalista:g('ocr-av-dir')||''
-    },
-    fieldsById:{
-      question_6xR8vJ:g('ocr-nombre')||'',
-      question_7ZoRvR:g('ocr-rut')||'',
-      question_bOL5rZ:g('ocr-telefono')?Number(g('ocr-telefono')):null,
-      question_A8x7Dz:g('ocr-correo')||'',
-      question_0PLQPB:'Caso ingresado via OCR'
+    createdAt:ts,
+    data:{
+      responseId:id,
+      submissionId:id,
+      respondentId:'ocr-respondent',
+      formId:'Ekv9Rl',
+      formName:'Ingreso Casos',
+      createdAt:ts,
+      fields:[
+        {key:'question_6xR8vJ_ocr',label:'nombre_completo',type:'INPUT_TEXT',value:g('ocr-nombre')||''},
+        {key:'question_7ZoRvR_ocr',label:'rut',type:'INPUT_TEXT',value:g('ocr-rut')||''},
+        {key:'question_bOL5rZ_ocr',label:'teléfono',type:'INPUT_NUMBER',value:g('ocr-telefono')?Number(g('ocr-telefono')):null},
+        {key:'question_A8x7Dz_ocr',label:'correo',type:'INPUT_TEXT',value:g('ocr-correo')||''},
+        {key:'question_0PLQPB_ocr',label:'observaciones',type:'TEXTAREA',value:'Caso ingresado via OCR'},
+        {key:'question_pagare_ocr',label:'numero_de_pagare',type:'INPUT_TEXT',value:g('ocr-pagare')||''},
+        {key:'question_emision_ocr',label:'fecha_de_emision',type:'INPUT_DATE',value:g('ocr-emision')||''},
+        {key:'question_venc_ocr',label:'fecha_de_vencimiento',type:'INPUT_DATE',value:g('ocr-vencimiento')||''},
+        {key:'question_monto_ocr',label:'monto_original',type:'INPUT_NUMBER',value:g('ocr-monto')?Number(g('ocr-monto')):0},
+        {key:'question_carrera_ocr',label:'carrera_alumno',type:'INPUT_TEXT',value:g('ocr-carrera')||''},
+        {key:'question_matricula_ocr',label:'numero_de_matricula',type:'INPUT_TEXT',value:g('ocr-matricula')||''},
+        {key:'question_notario_ocr',label:'notaria',type:'INPUT_TEXT',value:g('ocr-notario')||''},
+        {key:'question_avnom_ocr',label:'nombre_avalista',type:'INPUT_TEXT',value:g('ocr-av-nombre')||''},
+        {key:'question_avrut_ocr',label:'rut_avalista',type:'INPUT_TEXT',value:g('ocr-av-rut')||''},
+        {key:'question_avtel_ocr',label:'telefono_avalista',type:'INPUT_TEXT',value:g('ocr-av-tel')||''},
+        {key:'question_avdir_ocr',label:'direccion_avalista',type:'INPUT_TEXT',value:g('ocr-av-dir')||''}
+      ]
     }
   };
   setStatus('💾 Enviando a Make...','processing');
