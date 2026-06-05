@@ -475,35 +475,40 @@ async function guardarCasoOCR(){
   const g=id=>document.getElementById(id).value.trim();
   const ts=new Date().toISOString();
   const id='ocr-'+Date.now();
+  const fields=[
+    {key:'question_6xR8vJ_ocr',label:'nombre_completo',type:'INPUT_TEXT',value:g('ocr-nombre')||''},
+    {key:'question_7ZoRvR_ocr',label:'rut',type:'INPUT_TEXT',value:g('ocr-rut')||''},
+    {key:'question_bOL5rZ_ocr',label:'teléfono',type:'INPUT_NUMBER',value:g('ocr-telefono')?Number(g('ocr-telefono')):null},
+    {key:'question_A8x7Dz_ocr',label:'correo',type:'INPUT_TEXT',value:g('ocr-correo')||''},
+    {key:'question_0PLQPB_ocr',label:'observaciones',type:'TEXTAREA',value:'Caso ingresado via OCR'},
+    {key:'question_pagare_ocr',label:'numero_de_pagare',type:'INPUT_TEXT',value:g('ocr-pagare')||''},
+    {key:'question_emision_ocr',label:'fecha_de_emision',type:'INPUT_DATE',value:g('ocr-emision')||''},
+    {key:'question_venc_ocr',label:'fecha_de_vencimiento',type:'INPUT_DATE',value:g('ocr-vencimiento')||''},
+    {key:'question_monto_ocr',label:'monto_original',type:'INPUT_NUMBER',value:g('ocr-monto')?Number(g('ocr-monto')):0},
+    {key:'question_carrera_ocr',label:'carrera_alumno',type:'INPUT_TEXT',value:g('ocr-carrera')||''},
+    {key:'question_matricula_ocr',label:'numero_de_matricula',type:'INPUT_TEXT',value:g('ocr-matricula')||''},
+    {key:'question_notario_ocr',label:'notaria',type:'INPUT_TEXT',value:g('ocr-notario')||''},
+    {key:'question_avnom_ocr',label:'nombre_avalista',type:'INPUT_TEXT',value:g('ocr-av-nombre')||''},
+    {key:'question_avrut_ocr',label:'rut_avalista',type:'INPUT_TEXT',value:g('ocr-av-rut')||''},
+    {key:'question_avtel_ocr',label:'telefono_avalista',type:'INPUT_TEXT',value:g('ocr-av-tel')||''},
+    {key:'question_avdir_ocr',label:'direccion_avalista',type:'INPUT_TEXT',value:g('ocr-av-dir')||''}
+  ];
   const payload={
     eventId:id,
     eventType:'FORM_RESPONSE',
     createdAt:ts,
+    formId:'Ekv9Rl',
+    formName:'Ingreso Casos',
+    responseId:id,
+    submissionId:id,
+    fields:fields,
     data:{
       responseId:id,
       submissionId:id,
-      respondentId:'ocr-respondent',
       formId:'Ekv9Rl',
       formName:'Ingreso Casos',
       createdAt:ts,
-      fields:[
-        {key:'question_6xR8vJ_ocr',label:'nombre_completo',type:'INPUT_TEXT',value:g('ocr-nombre')||''},
-        {key:'question_7ZoRvR_ocr',label:'rut',type:'INPUT_TEXT',value:g('ocr-rut')||''},
-        {key:'question_bOL5rZ_ocr',label:'teléfono',type:'INPUT_NUMBER',value:g('ocr-telefono')?Number(g('ocr-telefono')):null},
-        {key:'question_A8x7Dz_ocr',label:'correo',type:'INPUT_TEXT',value:g('ocr-correo')||''},
-        {key:'question_0PLQPB_ocr',label:'observaciones',type:'TEXTAREA',value:'Caso ingresado via OCR'},
-        {key:'question_pagare_ocr',label:'numero_de_pagare',type:'INPUT_TEXT',value:g('ocr-pagare')||''},
-        {key:'question_emision_ocr',label:'fecha_de_emision',type:'INPUT_DATE',value:g('ocr-emision')||''},
-        {key:'question_venc_ocr',label:'fecha_de_vencimiento',type:'INPUT_DATE',value:g('ocr-vencimiento')||''},
-        {key:'question_monto_ocr',label:'monto_original',type:'INPUT_NUMBER',value:g('ocr-monto')?Number(g('ocr-monto')):0},
-        {key:'question_carrera_ocr',label:'carrera_alumno',type:'INPUT_TEXT',value:g('ocr-carrera')||''},
-        {key:'question_matricula_ocr',label:'numero_de_matricula',type:'INPUT_TEXT',value:g('ocr-matricula')||''},
-        {key:'question_notario_ocr',label:'notaria',type:'INPUT_TEXT',value:g('ocr-notario')||''},
-        {key:'question_avnom_ocr',label:'nombre_avalista',type:'INPUT_TEXT',value:g('ocr-av-nombre')||''},
-        {key:'question_avrut_ocr',label:'rut_avalista',type:'INPUT_TEXT',value:g('ocr-av-rut')||''},
-        {key:'question_avtel_ocr',label:'telefono_avalista',type:'INPUT_TEXT',value:g('ocr-av-tel')||''},
-        {key:'question_avdir_ocr',label:'direccion_avalista',type:'INPUT_TEXT',value:g('ocr-av-dir')||''}
-      ]
+      fields:fields
     }
   };
   setStatus('💾 Enviando a Make...','processing');
