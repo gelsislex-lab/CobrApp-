@@ -1,9 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "indice.html", "use": "@vercel/static" }
+    { "src": "indice.html", "use": "@vercel/static" },
+    { "src": "uoh.html", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/uoh", "dest": "/uoh.html" },
     { "src": "/(.*)", "dest": "/indice.html" }
   ]
 }
