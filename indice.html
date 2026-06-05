@@ -473,55 +473,50 @@ async function procesarOCR(){
 
 async function guardarCasoOCR(){
   const g=id=>document.getElementById(id).value.trim();
-  const ts=new Date().toISOString();
-  const id='ocr-'+Date.now();
-  const fields=[
-    {key:'question_6xR8vJ_ocr',label:'nombre_completo',type:'INPUT_TEXT',value:g('ocr-nombre')||''},
-    {key:'question_7ZoRvR_ocr',label:'rut',type:'INPUT_TEXT',value:g('ocr-rut')||''},
-    {key:'question_bOL5rZ_ocr',label:'teléfono',type:'INPUT_NUMBER',value:g('ocr-telefono')?Number(g('ocr-telefono')):null},
-    {key:'question_A8x7Dz_ocr',label:'correo',type:'INPUT_TEXT',value:g('ocr-correo')||''},
-    {key:'question_0PLQPB_ocr',label:'observaciones',type:'TEXTAREA',value:'Caso ingresado via OCR'},
-    {key:'question_pagare_ocr',label:'numero_de_pagare',type:'INPUT_TEXT',value:g('ocr-pagare')||''},
-    {key:'question_emision_ocr',label:'fecha_de_emision',type:'INPUT_DATE',value:g('ocr-emision')||''},
-    {key:'question_venc_ocr',label:'fecha_de_vencimiento',type:'INPUT_DATE',value:g('ocr-vencimiento')||''},
-    {key:'question_monto_ocr',label:'monto_original',type:'INPUT_NUMBER',value:g('ocr-monto')?Number(g('ocr-monto')):0},
-    {key:'question_carrera_ocr',label:'carrera_alumno',type:'INPUT_TEXT',value:g('ocr-carrera')||''},
-    {key:'question_matricula_ocr',label:'numero_de_matricula',type:'INPUT_TEXT',value:g('ocr-matricula')||''},
-    {key:'question_notario_ocr',label:'notaria',type:'INPUT_TEXT',value:g('ocr-notario')||''},
-    {key:'question_avnom_ocr',label:'nombre_avalista',type:'INPUT_TEXT',value:g('ocr-av-nombre')||''},
-    {key:'question_avrut_ocr',label:'rut_avalista',type:'INPUT_TEXT',value:g('ocr-av-rut')||''},
-    {key:'question_avtel_ocr',label:'telefono_avalista',type:'INPUT_TEXT',value:g('ocr-av-tel')||''},
-    {key:'question_avdir_ocr',label:'direccion_avalista',type:'INPUT_TEXT',value:g('ocr-av-dir')||''}
-  ];
-  const payload={
-    eventId:id,
-    eventType:'FORM_RESPONSE',
-    createdAt:ts,
-    formId:'Ekv9Rl',
-    formName:'Ingreso Casos',
-    responseId:id,
-    submissionId:id,
-    fields:fields,
-    data:{
-      responseId:id,
-      submissionId:id,
-      formId:'Ekv9Rl',
-      formName:'Ingreso Casos',
-      createdAt:ts,
-      fields:fields
-    }
+  const caso={
+    nombre:g('ocr-nombre')||null,
+    rut:g('ocr-rut')||null,
+    teléfono:g('ocr-telefono')||null,
+    correo:g('ocr-correo')||null,
+    carrera:g('ocr-carrera')||null,
+    nro_matricula:g('ocr-matricula')||null,
+    nro_pagare:g('ocr-pagare')||null,
+    monto_original:g('ocr-monto')?Number(g('ocr-monto')):null,
+    fecha_emision:g('ocr-emision')||null,
+    fecha_vencimiento:g('ocr-vencimiento')||null,
+    notario:g('ocr-notario')||null,
+    avalista_nombre:g('ocr-av-nombre')||null,
+    avalista_rut:g('ocr-av-rut')||null,
+    avalista_telefono:g('ocr-av-tel')||null,
+    avalista_direccion:g('ocr-av-dir')||null,
+    tasa_interes_mensual:1,
+    etapa:1,
+    etapa_nombre:'Recepción y Análisis',
+    fase:'prejudicial',
+    responsable:'Matías Gelsis',
+    ultima_carta:0,
+    tribunal:'1° Juzgado Civil de Rancagua',
+    observaciones:'Caso ingresado via OCR. Carta N°1 pendiente de envío automático.'
   };
-  setStatus('💾 Enviando a Make...','processing');
+  setStatus('💾 Guardando caso...','processing');
   try{
-    const r=await fetch('https://hook.us2.make.com/oo2fihpz4m5hdnqn8clyazn76r3tzw9s',{
+    const r=await fetch(SB_URL+'/rest/v1/casos',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(payload)
+      headers:{
+        'apikey':SB_KEY,
+        'Authorization':'Bearer '+SB_KEY,
+        'Content-Type':'application/json',
+        'Prefer':'return=representation'
+      },
+      body:JSON.stringify(caso)
     });
     if(r.ok){
-      setStatus('🎉 Caso enviado a Make. Creando caso y enviando Carta N°1...','success');
-      setTimeout(()=>{cerrarModal();cargarCasos();},3000);
-    }else throw new Error('HTTP '+r.status);
+      setStatus('🎉 Caso guardado. Carta N°1 se enviará automáticamente en el próximo ciclo.','success');
+      setTimeout(()=>{cerrarModal();cargarCasos();},2500);
+    }else{
+      const errText=await r.text();
+      throw new Error('Supabase: '+errText);
+    }
   }catch(err){setStatus('❌ Error: '+err.message,'error');}
 }
 
