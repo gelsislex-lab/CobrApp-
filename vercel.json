@@ -1,11 +1,14 @@
 {
   "version": 2,
   "builds": [
+    { "src": "index.html", "use": "@vercel/static" },
     { "src": "indice.html", "use": "@vercel/static" },
     { "src": "uoh.html", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/uoh", "dest": "/uoh.html" },
-    { "src": "/(.*)", "dest": "/indice.html" }
+    { "src": "/panel", "dest": "/indice.html" },
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
